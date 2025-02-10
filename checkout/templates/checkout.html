@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2>Kasse</h2>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 order-lg-last mb-5">
+                <div class="row">
+                    <div class="col-7 offset-2">
+                        <p class="mb-1 mt-0 small text-muted">Artikel</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        <p class="mb-1 mt-0 small text-muted">Zwischensumme</p>
+                    </div>
+                </div>
+                {% for item in bag_items %}
+                    <div class="row">
+                        <div class="col-2 mb-1">
+                            <a href="{% url 'product_detail' item.product.id %}">
+                                {% if item.product.image %}
+                                    <img class="w-100" src="{{ item.product.image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-7">
+                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                            <p class="my-0 small text-muted">Menge: {{ item.quantity }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <hr class="my-0">
+                <div class="row text-black text-right">
+                    <div class="col-7 offset-2">
+                        <p class="my-0">Gesamtsumme:</p>
+                    </div>
+                    <div class="col-3">
+                        <p class="my-0"><strong>${{ grand_total | floatformat:2 }}</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                    {% csrf_token %}
+                    <fieldset class="rounded px-3 mb-5">
+                        <legend class="fieldset-label small text-black px-2 w-auto">Einzelheiten</legend>
+                        {{ order_form.full_name | as_crispy_field }}
+                        {{ order_form.email | as_crispy_field }}
+                    </fieldset>
+                    <div class="submit-button text-right mt-5 mb-2">                    
+						<a href="{% url 'view_bag' %}" class="btn btn-outline-black rounded-0 btn-lg">
+							<span class="icon">
+								<i class="fas fa-chevron-left"></i>
+							</span>
+							<span class="text-uppercase">Warenkorb anpassen</span>
+						</a>
+					</div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

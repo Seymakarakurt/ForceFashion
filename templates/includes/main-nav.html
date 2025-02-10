@@ -1,0 +1,16 @@
+<div class="collapse navbar-collapse" id="main-nav">
+    <ul class="navbar-nav w-auto m-auto ">
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link mr-5" href="{% url 'products' %}" aria-haspopup="true" aria-expanded="false">
+                Alle Produkte
+            </a>
+        </li>
+        {% for cat in categories %}
+        <li class="nav-item">
+            <a class="logo-font font-weight-bold nav-link mr-5" href="{% url 'products' %}?category={{ cat.name }}" aria-haspopup="true" aria-expanded="false">
+                {{ cat.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

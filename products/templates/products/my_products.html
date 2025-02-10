@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2 class="logo-font mb-4">Produkte</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                     <div class="order-history table-responsive">
+                    <table class="table table-sm table-borderless">
+                        <thead>
+
+                        <!--Überschrift der Produktdetails-->
+
+                            <tr>
+                                <th>Kategorie</th>
+                                <th>Name</th>
+                                <th>Preis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <!--Datails von Produkten-->
+
+                            {% for product in products %}
+                                <tr>
+                                    <td>{{ product.category.name }}</td>
+                                    <td>
+                                      <a href="{% url 'product_detail' product.id %}">
+                                          {{ product.name }}
+                                      </a>
+                                    </td>
+                                    <td>{{ product.price }} €</td>
+                                    <td>
+
+                                        <!--Hinzufügen sowie Löschen mittels Button-->
+
+                                        <a href="{% url 'edit_product' product.id %}" class="btn btn-warning mr-2">Bearbeiten</a>
+                                        <a href="{% url 'delete_product' product.id %}" class="btn btn-danger">Löschen</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+{% endblock %}

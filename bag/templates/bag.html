@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container mb-2">
+    <div class="row">
+        <div class="col">
+            <hr>
+            <h2 class="logo-font mb-4">Warenkorb</h2>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+        <!--Sachen sind im Warenkorb-->
+
+            <div class="table-responsive rounded">
+                <table class="table table-sm table-borderless">
+                    <thead class="text-black">
+                        <tr>
+
+                            <!-- Überschrift der Produkte-->
+
+                            <th scope="col">Produktinformation</th>
+                            <th scope="col"></th>
+                            <th scope="col">Preis</th>
+                        </tr>
+                    </thead>
+                    {% for item in bag_items %}
+                    <tr>
+                        <td class="p-3 w-25">
+                            <form class="form update-form" method="POST" action="{% url 'adjust_to_bag' item.item_id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                            </div>
+                        </form>
+                            <!--Details-->
+
+                            {% if item.product.image %}
+                            <img class="w-100" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            {% else %}
+                            <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                            {% endif %}
+
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                            <p class="my-0 small text-muted">Menge: {{ item.quantity }}</p>
+                            <p class="my-0">{{ item.product.delivery_time }}</p>
+                        </td>
+                    <td class="py-3">
+                        <!--Preis-->
+                        <p class="my-0">{{ item.product.price }} €</p>
+                    </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5" class="pt-5 text-right">
+
+                    <!-- Warenkorb bzw. Anzahl der Summe-->
+
+                    <h4 class="mt-4"><strong>Gesamtsumme {{ grand_total|floatformat:2 }}</strong> €</h4>
+                </td>
+            </tr>
+             <td colspan="5" class="text-right">
+                <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                    <span class="icon">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                    <span class="text-uppercase">Zurück</span>
+                </a>
+                 <a href="{% url 'checkout' %}" class="btn btn-outline-wood rounded-0 btn-lg">
+                    <span class="text-uppercase">Kasse</span>
+                </a>
+             </td>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
