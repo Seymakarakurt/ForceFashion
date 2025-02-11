@@ -73,3 +73,5 @@ DEBUG=True
 DATABASE_URL=sqlite:///db.sqlite3
 ```
 
+Entwickelt von Seyma Karakurt
+
