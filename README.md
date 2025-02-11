@@ -73,10 +73,3 @@ DEBUG=True
 DATABASE_URL=sqlite:///db.sqlite3
 ```
 
-## 📜 Lizenz
-
-Dieses Projekt ist unter der **MIT-Lizenz** veröffentlicht.
-
----
-
-💡 Entwickelt mit ❤️ von [Seymakarakurt](https://github.com/Seymakarakurt)
